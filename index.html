@@ -100,19 +100,23 @@ function drawReceipt(fontSize, lineSpace, receiptWidth, logoScale) {
 
     var EntryTime = new Date();
     if(mode_test){
-        EntryTime.setHours(12);
-        EntryTime.setMinutes(1);
-        EntryTime.setMonth(5);
-        EntryTime.setDate(5);
+        var hours_test = 13;
+        var minutes_test = 15;
+        var month_test = 5;
+        var date_test = 1;
+        EntryTime.setHours(hours_test);
+        EntryTime.setMinutes(minutes_test);
+        EntryTime.setMonth(month_test);
+        EntryTime.setDate(date_test);
     }
-    EntryTime.setMinutes(EntryTime.getMinutes() + 10 - (EntryTime.getMinutes() % 5));
+    EntryTime.setMinutes(EntryTime.getMinutes() + 5 - (EntryTime.getMinutes() % 5));
     
     var StoreCloses = new Date();
     StoreCloses.setHours(17);
     StoreCloses.setMinutes(00); 
     if(mode_test){
-        StoreCloses.setMonth(5);
-        StoreCloses.setDate(5);
+        StoreCloses.setMonth(month_test);
+        StoreCloses.setDate(date_test);
     }
 
     if (canvas.getContext) {
@@ -164,8 +168,8 @@ function drawReceipt(fontSize, lineSpace, receiptWidth, logoScale) {
             cursor += lineSpace;
             cursor += lineSpace;
             onDrawBarcode('2011000001025',50,BarcodeDrawStartPosition+lineSpace*5, BarcodeHeight);
-            if(EntryTime.getTime() < StoreCloses.getTime()){
-                DrawCenterText(time(EntryTime,4)+' までのご利用 \¥1000-');  cursor += lineSpace;
+            if(EntryTime.getTime() >= StoreCloses.getTime()){
+                DrawCenterText(time(EntryTime,2)+' までのご利用 \¥1000-');  cursor += lineSpace;
                 if(EntryTime.getDay() == '0' | EntryTime.getDay() == '6' | document.getElementById('holiday').checked)DrawCenterText('以降19:00まで \¥1500-');cursor += lineSpace;
             }else{
                 DrawCenterText('19:00 までのご利用 \¥1000-');  cursor += lineSpace;
